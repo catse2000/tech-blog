@@ -1,24 +1,18 @@
 const { Model, DataTypes } = require('sequelize'); // import model and datatypes from sequelize
 const sequelize = require('../config/connection'); // import config file connection as sequelize for database connection
 
-// create our Post Model which inherits from the Model class
-class Post extends Model {};
+// create our Comment model which inherits from the Model class
+class Comment extends Model {};
 
-// create fields/columns for Post model
-Post.init(
+// define table columns and configuration
+Comment.init(
     {
-        // id used as the primary key for the table
         id: {
             type: DataTypes.INTEGER,
-            allowNull: false, 
-            primaryKey: true, 
+            primaryKey: true,
             autoIncrement: true
         },
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        post_body: {
+        comment_text: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
@@ -28,19 +22,28 @@ Post.init(
         },
         user_id: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             references: {
                 model: 'user',
+                key: 'id'
+            }
+        },
+        post_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'post',
                 key: 'id'
             }
         }
     },
     {
-        sequelize,  // pass in our imported sequelize connection (the direct connection to our database)
-        freezeTableName: true, 
+        sequelize,
+        freezeTableName: true,
         underscored: true,
-        modelName: 'post'
+        modelName: 'comment'
     }
 );
 
-// export post model so other parts of the application can use it
-module.exports = Post;
+// export user model so other parts of the application can use it
+module.exports = Comment;

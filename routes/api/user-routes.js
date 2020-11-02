@@ -1,5 +1,5 @@
 const router = require('express').Router(); // import express for server connectivity
-const { User } = require('../../models'); // import the User model to access it
+const { User, Post, Comment } = require('../../models'); // import the User model to access it
 
 // GET route used to search for all entries in the USERS table
 router.get('/', (req, res) => {
@@ -20,7 +20,21 @@ router.get('/:id', (req, res) => {
         attributes: { exclude: ['password'] },
         where: {
             id: req.params.id // locate an entry based on the primary key ID
-        }
+        },
+        include: [
+            {
+                model: Post,
+                attributes: ['id', 'title', 'post_body', 'created_at']
+            },
+            {
+                model: Comment, 
+                attributes: ['id', 'comment_text', 'created_at'],
+                include: {
+                    model: Post, 
+                    attributes: ['title']
+                }
+            }
+        ]
     })
     .then(dbUserData => {
         if (!dbUserData) {
