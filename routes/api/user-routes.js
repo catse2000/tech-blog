@@ -49,6 +49,31 @@ router.post('/', (req, res) => {
     })
 });
 
+// POST route used to log a user into their account
+router.post('/login', (req, res) => {
+    User.findOne({
+        where: {
+            email: req.body.email
+        }
+    })
+    .then(dbUserData => {
+        if (!dbUserData) {
+            res.status(400).json({ message: 'No user with that email address!' });
+            return;
+        }
+
+        const validPassword = dbUserData.checkPassword(req.body.password);
+
+        if (!validPassword) {
+            res.status(400).json({ message: 'Incorrect password' });
+            return;
+        }
+
+        res.json({ user: dbUserData, message: 'You are now logged in!' });
+    });
+});
+
+
 // PUT route used to update an entry in the USERS table using the primary key ID to define which entry to update
 router.put('/:id', (req, res) => {
     User.update(req.body, { // req.body is added here as user will have the ability to update any of the items in req.body

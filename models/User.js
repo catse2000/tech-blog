@@ -3,7 +3,12 @@ const sequelize = require('../config/connection'); // import config file connect
 const bcrypt = require('bcrypt'); // node file used to hash information that needs to be kept confidential, like passwords
 
 // create our User model which inherits from the Model class
-class User extends Model {};
+class User extends Model {
+    // set up method to run on instance data (per user) to check password
+    checkPassword(loginPw) {
+        return bcrypt.compareSync(loginPw, this.password);
+    };
+};
 
 // define table columns and configuration
 User.init( // initialize the model
