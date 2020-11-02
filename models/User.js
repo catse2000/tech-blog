@@ -1,4 +1,4 @@
-const { Model, DataTypes, STRING } = require('sequelize'); // import model and datatypes from sequelize
+const { Model, DataTypes } = require('sequelize'); // import model and datatypes from sequelize
 const sequelize = require('../config/connection'); // import config file connection as sequelize for database connection
 const bcrypt = require('bcrypt'); // node file used to hash information that needs to be kept confidential, like passwords
 
