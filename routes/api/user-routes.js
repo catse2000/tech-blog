@@ -52,6 +52,7 @@ router.post('/', (req, res) => {
 // PUT route used to update an entry in the USERS table using the primary key ID to define which entry to update
 router.put('/:id', (req, res) => {
     User.update(req.body, { // req.body is added here as user will have the ability to update any of the items in req.body
+        individualHooks: true, // used with bcrypt in the User model to hash an updated password
         where: { // used to locate the entry the user wishes to update
             id: req.params.id 
         }
