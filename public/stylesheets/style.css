@@ -198,7 +198,7 @@
   }
   
   .card-header {
-    color: var(--tertiary);
+    color: var(--primary);
     background-color: var(--dark);
     padding: 15px;
     border-radius: calc(.18rem - 1px) calc(.18rem - 1px) 0 0;
@@ -226,6 +226,10 @@
     font-weight: bold;
   }
 
+  .card-body span{
+    padding-left: 20px;
+  }
+
   /* FORM */
   .form-label,
   .form-input,
@@ -238,7 +242,7 @@
     margin: 0 0 0 5px;
   }
   
-  .form-input {
+  .form-input, .form-textarea {
     width: 100%;
     padding: 5px;
     margin: 5px 0;
