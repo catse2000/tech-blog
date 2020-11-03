@@ -1,0 +1,21 @@
+<a href="/dashboard" class="return"><strong>&larr; Back to dashboard</strong></a>
+<br>
+<br>
+
+<div class="card">
+    <h3 class="card-header">Edit Post</h3>
+    <div class="card-body">
+        <form class="edit-post-form">
+            <div>
+                <label class="form-label" for="post-title">Title:</label>
+                <input name="post-title" type="text" value="{{post.title}}" class="form-input"/>
+
+                <label class="form-label" for="post-body">Post Contents:</label>
+                <textarea name="post-body" type="text" class="form-textarea">{{post.post_body}}</textarea>
+            </div>
+            <button type="submit" class="btn">Save post</button> <button type="button" class="delete-post-btn btn">Delete post</button>
+        </form>
+    </div>
+</div>
+<script src="/javascript/edit-post.js"></script>
+<script src="/javascript/delete-post.js"></script>

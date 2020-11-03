@@ -1,5 +1,6 @@
 const router = require('express').Router(); // import express for server connectivity
 const { Post, User, Comment } = require('../../models'); // import user, post and comment models to access them
+const withAuth = require('../../utils/auth');
 
 // GET route used to search for all entries in the POSTS table
 router.get('/', (req, res) => {
@@ -56,11 +57,11 @@ router.get('/:id', (req, res) => {
 });
 
 // POST route used to add new entries to the POSTS table
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
     Post.create({
         title: req.body.title,
         post_body: req.body.post_body,
-        user_id: req.body.user_id
+        user_id: req.session.user_id
     })
     .then(dbPostData => res.json(dbPostData))
     .catch(err => {
@@ -70,10 +71,11 @@ router.post('/', (req, res) => {
 });
 
 // PUT route used to update an entry in the POSTS table using the primary key ID to define which entry to update
-router.put('/:id', (req, res) => {
+router.put('/:id', withAuth, (req, res) => {
     Post.update(
         {
-            title: req.body.title
+            title: req.body.title,
+            post_body: req.body.post_body
         },
         {
             where: {
@@ -95,7 +97,7 @@ router.put('/:id', (req, res) => {
 });
 
 // DELETE route used to delete an entry from the POSTS table using the primary key ID to define which entry to delete
-router.delete('/:id', (req, res) => {
+router.delete('/:id', withAuth, (req, res) => {
     Post.destroy({
         where: {
             id: req.params.id

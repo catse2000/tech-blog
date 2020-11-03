@@ -1,5 +1,6 @@
 const router = require('express').Router(); // import express for server connectivity
 const { User, Post, Comment } = require('../../models'); // import the User model to access it
+const withAuth = require('../../utils/auth');
 
 // GET route used to search for all entries in the USERS table
 router.get('/', (req, res) => {
@@ -7,7 +8,15 @@ router.get('/', (req, res) => {
     User.findAll({
         attributes: { exclude: ['password'] }
     })
-    .then(dbUserData => res.json(dbUserData))
+    .then(dbUserData => {
+        req.session.save(() => { // store session cookie using user_id, username, and boolean loggedIn
+          req.session.user_id = dbUserData.id;
+          req.session.username = dbUserData.username;
+          req.session.loggedIn = true;
+      
+          res.json(dbUserData);
+        });
+    })
     .catch(err => {
         console.log(err);
         res.status(500).json(err);
@@ -50,7 +59,7 @@ router.get('/:id', (req, res) => {
 });
 
 // POST route used to add new entries to the USERS table
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
     User.create({
         username: req.body.username, // username defined in model, req.body.username is what we get from req.body, and later, the application
         email: req.body.email, 
@@ -67,10 +76,9 @@ router.post('/', (req, res) => {
 router.post('/login', (req, res) => {
     User.findOne({
         where: {
-            email: req.body.email
+            username: req.body.username
         }
-    })
-    .then(dbUserData => {
+    }).then(dbUserData => {
         if (!dbUserData) {
             res.status(400).json({ message: 'No user with that email address!' });
             return;
@@ -79,14 +87,32 @@ router.post('/login', (req, res) => {
         const validPassword = dbUserData.checkPassword(req.body.password);
 
         if (!validPassword) {
-            res.status(400).json({ message: 'Incorrect password' });
+            res.status(400).json({ message: 'Incorrect password!' });
             return;
         }
 
-        res.json({ user: dbUserData, message: 'You are now logged in!' });
+        req.session.save(() => {
+            // declare session variables
+            req.session.user_id = dbUserData.id;
+            req.session.username = dbUserData.username;
+            req.session.loggedIn = true;
+
+            res.json({ user: dbUserData, message: 'You are now logged in!' });
+        });
     });
 });
 
+// POST route used to log a user out of their account
+router.post('/logout', (req, res) => {
+    if (req.session.loggedIn) {
+        req.session.destroy(() => {
+            res.status(204).end();
+        });
+    }
+    else {
+        res.status(404).end();
+    }
+});
 
 // PUT route used to update an entry in the USERS table using the primary key ID to define which entry to update
 router.put('/:id', (req, res) => {
@@ -110,7 +136,7 @@ router.put('/:id', (req, res) => {
 });
 
 // DELETE route used to delete an entry from the USERS table using the primary key ID to define which entry to delete
-router.delete("/:id", (req, res) => {
+router.delete("/:id", withAuth, (req, res) => {
     User.destroy({
         where: {
             id: req.params.id
