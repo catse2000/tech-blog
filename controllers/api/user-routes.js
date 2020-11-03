@@ -59,7 +59,7 @@ router.get('/:id', (req, res) => {
 });
 
 // POST route used to add new entries to the USERS table
-router.post('/', withAuth, (req, res) => {
+router.post('/', (req, res) => {
     User.create({
         username: req.body.username, // username defined in model, req.body.username is what we get from req.body, and later, the application
         email: req.body.email, 
