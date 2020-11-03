@@ -56,13 +56,19 @@
     font-size: 1.2rem;
   }
 
-  
+  .return{
+    color: var(--dark);
+    text-decoration: none;
+  }
+
+  .return:hover{
+    color: var(--light-dark);
+  }
+
    .btn {
     font-size: 1.3rem;
     text-decoration:none;
     padding: 6px 5px;
-    width: 100%;
-    display: block;
     margin: 5px 0;
     border-radius: var(--border-radius);
     color: var(--primary);
@@ -71,6 +77,7 @@
     background-color: var(--light-dark);
     box-shadow: 3px 3px var(--dark);
     transform: translate(-1px, -1px);
+    align-content: center;
   }
   
    .btn:hover {

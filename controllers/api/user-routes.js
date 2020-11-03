@@ -1,5 +1,6 @@
 const router = require('express').Router(); // import express for server connectivity
 const { User, Post, Comment } = require('../../models'); // import the User model to access it
+const withAuth = require('../../utils/auth');
 
 // GET route used to search for all entries in the USERS table
 router.get('/', (req, res) => {
@@ -58,7 +59,7 @@ router.get('/:id', (req, res) => {
 });
 
 // POST route used to add new entries to the USERS table
-router.post('/', (req, res) => {
+router.post('/', withAuth, (req, res) => {
     User.create({
         username: req.body.username, // username defined in model, req.body.username is what we get from req.body, and later, the application
         email: req.body.email, 
@@ -135,7 +136,7 @@ router.put('/:id', (req, res) => {
 });
 
 // DELETE route used to delete an entry from the USERS table using the primary key ID to define which entry to delete
-router.delete("/:id", (req, res) => {
+router.delete("/:id", withAuth, (req, res) => {
     User.destroy({
         where: {
             id: req.params.id

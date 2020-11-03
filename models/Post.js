@@ -22,7 +22,6 @@ Post.init(
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                min: 1,
                 max: 160
             }
         },

@@ -1,0 +1,34 @@
+<div class="card">
+    <h3 class="card-header">Create New Post</h3>
+    <div class="card-body">
+        <form class="new-post-form">
+            <div>
+                <label for="post-title">Title</label>
+                <input type="text" id="post-title" name="post-title" class="form-input" />
+            </div>
+            <div>
+                <label for="post-body">Post</label>
+                <textarea type="text" id="post-body" name="post-body" class="form-textarea"></textarea>
+                </div>
+            <button type="submit" class="btn">Create</button>
+        </form>
+    </div>
+</div>
+
+{{#if posts.length}}
+<div class="card">
+    <h3 class="card-header">Your Posts</h3>
+    <div class="card-body">
+        <ol>
+            {{#each posts as |post|}}
+            <li>
+                <strong>{{title}} ({{format_date created_at}}) </strong>
+                <a href="/dashboard/edit/{{post.id}}" class="edit-link">(Edit post)</a><br>
+                <div><q>{{post_body}}</q></div>
+            </li>
+            {{/each}}
+        </ol>
+    </div>
+</div>
+{{/if}}
+<script src="/javascript/add-post.js"></script>
