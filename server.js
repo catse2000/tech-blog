@@ -3,7 +3,8 @@ const routes = require('./controllers'); // import the routes folder
 const sequelize = require('./config/connection'); // import the connection file for the database
 const path = require('path'); //import public folder to access javascript and stylesheets
 const exphbs = require('express-handlebars')// import express-handlebars as the website engine
-const hbs = exphbs.create({}); //create new handlebars engine
+const helpers = require('./utils/helpers'); // import jest tested helpers file
+const hbs = exphbs.create({ helpers }); //create new handlebars engine
 
 const app = express(); // initialize the express server
 const PORT = process.env.PORT || 3001; // if port 3001 is not available use one provided by the service hosting the application

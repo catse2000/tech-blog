@@ -1,9 +1,4 @@
-<div class="card flex">
-    <h3 class="card-header flex-row justify-space-between">
-        {{post.title}}
-        <span>Posted by {{post.user.username}} on {{post.created_at}}</span></h3>
-    <div class="card-body">
-        <p>{{post.post_body}}</p>
+{{> post-info post}}
     </div>
 </div>
 
@@ -25,19 +20,8 @@
 {{/if}}
 
 
-<div class="card">
-    <h3 class="card-header">{{post.comments.length}} Comments</h3>
-    <div class="card-body">
-        {{#each post.comments}}
-        <div class="meta">
-            <strong>{{user.username}}</strong> on {{created_at}}
-        </div>
-        <div class="text">
-            <span><q>{{comment_text}}</q></span>
-        </div>
-        {{/each}}
-    </div>
-</div>
+{{> comments post.comments}}
+
 {{#if loggedIn}}
 <script src="/javascript/comment.js"></script>
 {{/if}}
