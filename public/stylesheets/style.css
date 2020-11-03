@@ -32,7 +32,21 @@
     color: var(--dark);
     line-height: 1.25;
   }
-  
+  nav{
+    padding-bottom: 15px; 
+  }
+
+  nav a{
+    color: var(--primary);
+    text-decoration: none;
+    padding: 0 30px 20px 0;
+    margin-bottom: 20px; 
+  }
+
+  nav a:hover{
+    color: var(--tertiary);
+  }
+
   main {
     margin: 20px auto;
     width: 94%;
@@ -41,7 +55,7 @@
   p {
     font-size: 1.2rem;
   }
-  
+
   
    .btn {
     font-size: 1.3rem;
@@ -66,6 +80,19 @@
     box-shadow: 2px 2px var(--dark);
   }
   
+  .btn-no-style {
+    background: none;
+    color: inherit;
+    border: none;
+    color: var(--primary);
+    padding: 0 30px 20px 0;
+    font-size: 16px;
+  }
+
+  .btn-no-style:hover{
+    color: var(--tertiary);
+  }
+
   .btn-inline {
     display: inline;
   }
@@ -163,11 +190,11 @@
 
   .card a{
       text-decoration: none;
-      color: var(--tertiary);
+      color: var(--primary);
   }
 
   .card a:hover{
-      color: var(--primary);
+      color: var(--tertiary);
   }
   
   .card-header {
@@ -186,6 +213,19 @@
     padding: 15px;
   }
   
+  .card-body div{
+    padding: 5px;
+  }
+
+  .card-body a {
+    color: var(--light-dark);
+  }
+
+  .card-body a:hover{
+    color: var(--dark);
+    font-weight: bold;
+  }
+
   /* FORM */
   .form-label,
   .form-input,
@@ -200,7 +240,7 @@
   
   .form-input {
     width: 100%;
-    padding: 3%;
+    padding: 5px;
     margin: 5px 0;
     font-size: 1.2rem;
     border: 2px solid var(--light-dark);
